@@ -10,14 +10,18 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include src/gpt/subdir.mk
 -include src/UART/subdir.mk
+-include src/STP_23L/subdir.mk
 -include src/OLED/subdir.mk
 -include src/IIC/subdir.mk
+-include src/ICM_20948/subdir.mk
 -include src/subdir.mk
 -include ra_gen/subdir.mk
 -include ra/fsp/src/r_sci_uart/subdir.mk
 -include ra/fsp/src/r_sci_i2c/subdir.mk
 -include ra/fsp/src/r_ioport/subdir.mk
+-include ra/fsp/src/r_gpt/subdir.mk
 -include ra/fsp/src/bsp/mcu/ra6m5/subdir.mk
 -include ra/fsp/src/bsp/mcu/all/subdir.mk
 -include ra/fsp/src/bsp/cmsis/Device/RENESAS/Source/subdir.mk
@@ -96,7 +100,7 @@ all: IIC_templates.elf secondary-outputs
 
 # Tool invocations
 IIC_templates.elf: $(OBJS) $(USER_OBJS) $(LINKER_SCRIPT)
-	$(file > IIC_templates.elf.in,-mcpu=cortex-m33 -mthumb -mfloat-abi=hard -mfpu=fpv5-sp-d16 -O2 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-strict-aliasing -Wunused -Wuninitialized -Wall -Wextra -Wmissing-declarations -Wconversion -Wpointer-arith -Wshadow -Wlogical-op -Waggregate-return -Wfloat-equal -g -T "fsp.ld" -Xlinker --gc-sections -L "E:\\e2_projects\\IIC_templates/script" -Wl,-Map,"IIC_templates.map" --specs=nano.specs -o "IIC_templates.elf" -Wl,--start-group $(OBJS) $(USER_OBJS) $(LIBS) -Wl,--end-group)
+	$(file > IIC_templates.elf.in,-mcpu=cortex-m33 -mthumb -mfloat-abi=hard -mfpu=fpv5-sp-d16 -O2 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-strict-aliasing -Wunused -Wuninitialized -Wall -Wextra -Wmissing-declarations -Wconversion -Wpointer-arith -Wshadow -Wlogical-op -Waggregate-return -Wfloat-equal -g -T "fsp.ld" -Xlinker --gc-sections -L "D:\\F570_drone_transplant_demo\\renesas\\IMU_test/script" -Wl,-Map,"IIC_templates.map" --specs=nano.specs -o "IIC_templates.elf" -Wl,--start-group $(OBJS) $(USER_OBJS) $(LIBS) -Wl,--end-group)
 	@echo Building target: $@ && arm-none-eabi-gcc @"IIC_templates.elf.in"
 IIC_templates.hex: IIC_templates.elf
 	arm-none-eabi-objcopy -O ihex "IIC_templates.elf"  "IIC_templates.hex"

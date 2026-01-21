@@ -11,6 +11,8 @@
 #include "hal_data.h"
 
 void Gpt_Init(void);
-void Gpt_Pwm_Setduty(uint8_t duty);
+void Gpt1_Pwm_Setduty(uint8_t duty);
+void Gpt2_Pwm_Setduty(uint8_t duty);
+
 
 #endif /* GPT_BSP_GPT_H_ */

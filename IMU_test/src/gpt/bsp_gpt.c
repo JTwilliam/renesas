@@ -7,17 +7,19 @@ void Gpt_Init(void)
 {
     R_GPT_Open(&g_timer2_ctrl,&g_timer2_cfg);
     R_GPT_Open(&g_timer1_ctrl,&g_timer1_cfg);
-    R_GPT_Open(&g_timer0_ctrl,&g_timer0_cfg);
+
 
     R_GPT_Enable(&g_timer2_ctrl);
 
     R_GPT_Start(&g_timer2_ctrl);
     R_GPT_Start(&g_timer1_ctrl);
-    R_GPT_Start(&g_timer0_ctrl);
+
 
 }
 
-void Gpt_Pwm_Setduty(uint8_t duty)
+
+//gpt1/2pwm输出
+void Gpt1_Pwm_Setduty(uint8_t duty)
 {
     timer_info_t info;
     uint32_t duty_count;
@@ -31,12 +33,26 @@ void Gpt_Pwm_Setduty(uint8_t duty)
 
 }
 
+void Gpt2_Pwm_Setduty(uint8_t duty)
+{
+    timer_info_t info;
+    uint32_t duty_count;
+
+    if(duty>100)
+        duty = 100;
+
+    R_GPT_InfoGet(&g_timer2_ctrl, &info);
+    duty_count=(info.period_counts * duty) / 100;
+    R_GPT_DutyCycleSet(&g_timer2_ctrl,duty_count, GPT_IO_PIN_GTIOCA);
+}
 
 uint32_t pwm_period;
 uint32_t pwm_freq;
 uint32_t pwm_duty;
 uint32_t pwm_high_level;
 
+
+//gpt2输入捕获
 void gpt2_callback(timer_callback_args_t *p_args)
 {
     static uint32_t t;
@@ -81,9 +97,4 @@ void gpt2_callback(timer_callback_args_t *p_args)
 
 }
 
-
-void gpt0_callback(timer_callback_args_t *p_args)
-{
-    R_PORT2->PODR ^= 1<<(BSP_IO_PORT_04_PIN_00 & 0xFF);
-}
 
