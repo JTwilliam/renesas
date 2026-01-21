@@ -86,3 +86,4 @@ void gpt0_callback(timer_callback_args_t *p_args)
 {
     R_PORT2->PODR ^= 1<<(BSP_IO_PORT_04_PIN_00 & 0xFF);
 }
+
