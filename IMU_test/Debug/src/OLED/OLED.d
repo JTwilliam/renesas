@@ -53,12 +53,18 @@ src/OLED/OLED.o: ../src/OLED/OLED.c ../src/OLED/OLED.h \
  D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/api/bsp_api.h \
  D:/F570_drone_transplant_demo/renesas/IMU_test/ra_cfg/fsp_cfg/r_ioport_cfg.h \
  D:/F570_drone_transplant_demo/renesas/IMU_test/ra_cfg/fsp_cfg/bsp/bsp_pin_cfg.h \
+ D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/instances/r_dmac.h \
+ D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/api/r_transfer_api.h \
+ D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/instances/r_adc.h \
+ D:/F570_drone_transplant_demo/renesas/IMU_test/ra_cfg/fsp_cfg/r_adc_cfg.h \
+ D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/api/r_adc_api.h \
+ D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/api/r_elc_api.h \
+ D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/api/r_transfer_api.h \
  D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/instances/r_gpt.h \
  D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/api/r_timer_api.h \
  D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/instances/r_sci_i2c.h \
  D:/F570_drone_transplant_demo/renesas/IMU_test/ra_cfg/fsp_cfg/r_sci_i2c_cfg.h \
  D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/api/r_i2c_master_api.h \
- D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/api/r_transfer_api.h \
  D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/instances/r_sci_uart.h \
  D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/api/r_uart_api.h \
  D:/F570_drone_transplant_demo/renesas/IMU_test/ra_cfg/fsp_cfg/r_sci_uart_cfg.h \
@@ -119,12 +125,18 @@ D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/api/r_ioport_api.h:
 D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/api/bsp_api.h:
 D:/F570_drone_transplant_demo/renesas/IMU_test/ra_cfg/fsp_cfg/r_ioport_cfg.h:
 D:/F570_drone_transplant_demo/renesas/IMU_test/ra_cfg/fsp_cfg/bsp/bsp_pin_cfg.h:
+D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/instances/r_dmac.h:
+D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/api/r_transfer_api.h:
+D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/instances/r_adc.h:
+D:/F570_drone_transplant_demo/renesas/IMU_test/ra_cfg/fsp_cfg/r_adc_cfg.h:
+D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/api/r_adc_api.h:
+D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/api/r_elc_api.h:
+D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/api/r_transfer_api.h:
 D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/instances/r_gpt.h:
 D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/api/r_timer_api.h:
 D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/instances/r_sci_i2c.h:
 D:/F570_drone_transplant_demo/renesas/IMU_test/ra_cfg/fsp_cfg/r_sci_i2c_cfg.h:
 D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/api/r_i2c_master_api.h:
-D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/api/r_transfer_api.h:
 D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/instances/r_sci_uart.h:
 D:/F570_drone_transplant_demo/renesas/IMU_test/ra/fsp/inc/api/r_uart_api.h:
 D:/F570_drone_transplant_demo/renesas/IMU_test/ra_cfg/fsp_cfg/r_sci_uart_cfg.h:

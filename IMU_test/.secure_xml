@@ -66,10 +66,14 @@
   </raClockConfiguration>
   <raPinConfiguration>
     <pincfg active="true" name="" symbol="">
+      <configSetting altId="adc0.an00.p000" configurationId="adc0.an00" isUsedByDriver="true" peripheral="ADC0"/>
+      <configSetting altId="adc0.an01.p001" configurationId="adc0.an01" isUsedByDriver="true" peripheral="ADC0"/>
       <configSetting altId="debug0.swclk.p300" configurationId="debug0.swclk" isUsedByDriver="true" peripheral="DEBUG0"/>
       <configSetting altId="debug0.swdio.p108" configurationId="debug0.swdio" isUsedByDriver="true" peripheral="DEBUG0"/>
       <configSetting altId="gpt1.gtioca.p405" configurationId="gpt1.gtioca" isUsedByDriver="true" peripheral="GPT1"/>
       <configSetting altId="gpt2.gtiocb.p114" configurationId="gpt2.gtiocb" isUsedByDriver="true" peripheral="GPT2"/>
+      <configSetting altId="p000.gpio_mode.gpio_mode_an" configurationId="p000.gpio_mode"/>
+      <configSetting altId="p001.gpio_mode.gpio_mode_an" configurationId="p001.gpio_mode"/>
       <configSetting altId="p108.gpio_mode.gpio_mode_peripheral" configurationId="p108.gpio_mode"/>
       <configSetting altId="p112.gpio_mode.gpio_mode_peripheral" configurationId="p112.gpio_mode"/>
       <configSetting altId="p112.gpio_otype.gpio_otype_n_ch_od" configurationId="p112.gpio_otype"/>

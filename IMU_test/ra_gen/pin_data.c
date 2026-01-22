@@ -5,8 +5,12 @@
 const ioport_pin_cfg_t g_bsp_pin_cfg_data[] =
         {
 
-        { .pin = BSP_IO_PORT_01_PIN_08, .pin_cfg = ((uint32_t) IOPORT_CFG_PERIPHERAL_PIN
-                | (uint32_t) IOPORT_PERIPHERAL_DEBUG) },
+        { .pin = BSP_IO_PORT_00_PIN_00, .pin_cfg = ((uint32_t) IOPORT_CFG_ANALOG_ENABLE) },
+
+          { .pin = BSP_IO_PORT_00_PIN_01, .pin_cfg = ((uint32_t) IOPORT_CFG_ANALOG_ENABLE) },
+
+          { .pin = BSP_IO_PORT_01_PIN_08, .pin_cfg = ((uint32_t) IOPORT_CFG_PERIPHERAL_PIN
+                  | (uint32_t) IOPORT_PERIPHERAL_DEBUG) },
 
           { .pin = BSP_IO_PORT_01_PIN_12, .pin_cfg = ((uint32_t) IOPORT_CFG_NMOS_ENABLE
                   | (uint32_t) IOPORT_CFG_PERIPHERAL_PIN | (uint32_t) IOPORT_PERIPHERAL_SCI0_2_4_6_8) },

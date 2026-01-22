@@ -13,6 +13,7 @@
             [6] = gpt_counter_overflow_isr, /* GPT2 COUNTER OVERFLOW (Overflow) */
             [7] = gpt_capture_compare_a_isr, /* GPT2 CAPTURE COMPARE A (Capture/Compare match A) */
             [8] = gpt_capture_compare_b_isr, /* GPT2 CAPTURE COMPARE B (Capture/Compare match B) */
+            [9] = adc_scan_end_isr, /* ADC0 SCAN END (End of A/D scanning operation) */
         };
         #if BSP_FEATURE_ICU_HAS_IELSR
         const bsp_interrupt_event_t g_interrupt_event_link_select[BSP_ICU_VECTOR_NUM_ENTRIES] =
@@ -26,6 +27,7 @@
             [6] = BSP_PRV_VECT_ENUM(EVENT_GPT2_COUNTER_OVERFLOW,GROUP6), /* GPT2 COUNTER OVERFLOW (Overflow) */
             [7] = BSP_PRV_VECT_ENUM(EVENT_GPT2_CAPTURE_COMPARE_A,GROUP7), /* GPT2 CAPTURE COMPARE A (Capture/Compare match A) */
             [8] = BSP_PRV_VECT_ENUM(EVENT_GPT2_CAPTURE_COMPARE_B,GROUP0), /* GPT2 CAPTURE COMPARE B (Capture/Compare match B) */
+            [9] = BSP_PRV_VECT_ENUM(EVENT_ADC0_SCAN_END,GROUP1), /* ADC0 SCAN END (End of A/D scanning operation) */
         };
         #endif
         #endif

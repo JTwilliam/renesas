@@ -150,8 +150,8 @@ FSP Configuration
       AVCCUSBHS H13 USB_HS0_AVCC_USBHS - - - - - - - - IO "Read only" - 
       AVSS0 N9 ANALOG0_AVSS0 - - - - - - - - IO "Read only" - 
       AVSSUSBHS G14 USB_HS0_AVSS_USBHS - - - - - - - - IO "Read only" - 
-      P000 R12 - - - - Disabled - - "ADC0: AN000; ADC1: AN100; ICU0: IRQ06" - None - - 
-      P001 N11 - - - - Disabled - - "ADC0: AN001; ADC1: AN101; ICU0: IRQ07" - None - - 
+      P000 R12 ADC0_AN000 - - - "Analog mode" - None "ADC0: AN000; ADC1: AN100; ICU0: IRQ06" - IO - - 
+      P001 N11 ADC0_AN001 - - - "Analog mode" - None "ADC0: AN001; ADC1: AN101; ICU0: IRQ07" - IO - - 
       P002 R11 - - - - Disabled - - "ADC0: AN002; ADC1: AN102; ICU0: IRQ08" - None - - 
       P003 M5 - - - - Disabled - - "ADC0: AN003" - None - - 
       P004 P11 - - - - Disabled - - "ADC0: AN004; ICU0: IRQ09" - None - - 
@@ -353,6 +353,12 @@ FSP Configuration
     Pin Output Support: Enabled
     Write Protect Enable: Disabled
     
+  Module "ADC (r_adc)"
+    Parameter Checking: Default (BSP)
+    
+  Module "Transfer (r_dmac)"
+    Parameter Checking: Default (BSP)
+    
   HAL
     Instance "g_ioport I/O Port (r_ioport)"
       Name: g_ioport
@@ -536,4 +542,58 @@ FSP Configuration
       Extra Features: Interrupt Skipping (Channels with GTITC only): Skip ADC Events: None
       Extra Features: Output Disable: GTIOCA Disable Setting: Disable Prohibited
       Extra Features: Output Disable: GTIOCB Disable Setting: Disable Prohibited
+      
+    Instance "g_adc0 ADC (r_adc)"
+      General: Name: g_adc0
+      General: Unit: 0
+      General: Resolution: 12-Bit
+      General: Alignment: Right
+      General: Clear after read: Off
+      General: Mode: Continuous Scan
+      General: Double-trigger: Disabled
+      Input: Channel Scan Mask (channel availability varies by MCU): Channel 0
+      Input: Group B Scan Mask (channel availability varies by MCU): 
+      Interrupts: Normal/Group A Trigger: Software
+      Interrupts: Group B Trigger: Disabled
+      Interrupts: Group Priority (Valid only in Group Scan Mode): Group A cannot interrupt Group B
+      Input: Add/Average Count: Disabled
+      Input: Reference Voltage control: VREFH0/VREFH
+      Input: Addition/Averaging Mask (channel availability varies by MCU and unit): 
+      Input: Sample and Hold: Sample and Hold Channels (Available only on selected MCUs): 
+      Input: Sample and Hold: Sample Hold States (Applies only to channels 0, 1, 2): 24
+      Input: Window Compare: Window Mode: Disabled
+      Input: Window Compare: Event Output: OR
+      Input: Window Compare: Window A: Enable: Disabled
+      Input: Window Compare: Window A: Channels to compare (channel availability varies by MCU and unit): 
+      Input: Window Compare: Window A: Channel comparison mode (channel availability varies by MCU and unit): 
+      Input: Window Compare: Window A: Lower Reference: 0
+      Input: Window Compare: Window A: Upper Reference: 0
+      Input: Window Compare: Window B: Enable: Disabled
+      Input: Window Compare: Window B: Channel to compare (channel availability varies by MCU and unit): Channel 0
+      Input: Window Compare: Window B: Comparison mode: Less Than or Outside Window
+      Input: Window Compare: Window B: Lower Reference: 0
+      Input: Window Compare: Window B: Upper Reference: 0
+      Interrupts: Callback: adc_callback
+      Interrupts: Scan End Interrupt Priority: Priority 4
+      Interrupts: Scan End Group B Interrupt Priority: Disabled
+      Interrupts: Window Compare A Interrupt Priority: Disabled
+      Interrupts: Window Compare B Interrupt Priority: Disabled
+      Extra: ADC Ring Buffer: Disabled
+      
+    Instance "g_transfer0 Transfer (r_dmac) ADC0 SCAN END (End of A/D scanning operation)"
+      Name: g_transfer0
+      Channel: 0
+      Mode: Repeat
+      Transfer Size: 2 Bytes
+      Destination Address Mode: Incremented
+      Source Address Mode: Fixed
+      Repeat Area (Unused in Normal Mode): Source
+      Number of Transfers: 2
+      Number of Blocks (Valid only in Repeat,Block or Repeat-Block Mode): 0
+      Activation Source: ADC0 SCAN END (End of A/D scanning operation)
+      Callback: NULL
+      Transfer End Interrupt Priority: Disabled
+      Interrupt Frequency: Interrupt after all transfers have completed
+      Offset value (Valid only when address mode is Offset addition): 1
+      Source Buffer Size: 1
       

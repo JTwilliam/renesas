@@ -6,7 +6,7 @@
         #endif
 /* Number of interrupts allocated */
 #ifndef VECTOR_DATA_IRQ_COUNT
-#define VECTOR_DATA_IRQ_COUNT    (9)
+#define VECTOR_DATA_IRQ_COUNT    (10)
 #endif
 /* ISR prototypes */
 void sci_uart_rxi_isr(void);
@@ -18,6 +18,7 @@ void sci_i2c_tei_isr(void);
 void gpt_counter_overflow_isr(void);
 void gpt_capture_compare_a_isr(void);
 void gpt_capture_compare_b_isr(void);
+void adc_scan_end_isr(void);
 
 /* Vector table allocations */
 #define VECTOR_NUMBER_SCI4_RXI ((IRQn_Type) 0) /* SCI4 RXI (Receive data full) */
@@ -38,8 +39,10 @@ void gpt_capture_compare_b_isr(void);
 #define GPT2_CAPTURE_COMPARE_A_IRQn          ((IRQn_Type) 7) /* GPT2 CAPTURE COMPARE A (Capture/Compare match A) */
 #define VECTOR_NUMBER_GPT2_CAPTURE_COMPARE_B ((IRQn_Type) 8) /* GPT2 CAPTURE COMPARE B (Capture/Compare match B) */
 #define GPT2_CAPTURE_COMPARE_B_IRQn          ((IRQn_Type) 8) /* GPT2 CAPTURE COMPARE B (Capture/Compare match B) */
+#define VECTOR_NUMBER_ADC0_SCAN_END ((IRQn_Type) 9) /* ADC0 SCAN END (End of A/D scanning operation) */
+#define ADC0_SCAN_END_IRQn          ((IRQn_Type) 9) /* ADC0 SCAN END (End of A/D scanning operation) */
 /* The number of entries required for the ICU vector table. */
-#define BSP_ICU_VECTOR_NUM_ENTRIES (9)
+#define BSP_ICU_VECTOR_NUM_ENTRIES (10)
 
 #ifdef __cplusplus
         }

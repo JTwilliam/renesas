@@ -24,8 +24,7 @@ void Gpt1_Pwm_Setduty(uint8_t duty)
     timer_info_t info;
     uint32_t duty_count;
 
-    if(duty>100)
-        duty = 100;
+    duty = (duty > 100) ? 100 : (duty < 0) ? 0 : duty;
 
     R_GPT_InfoGet(&g_timer1_ctrl, &info);
     duty_count=(info.period_counts * duty) / 100;
@@ -38,18 +37,13 @@ void Gpt2_Pwm_Setduty(uint8_t duty)
     timer_info_t info;
     uint32_t duty_count;
 
-    if(duty>100)
-        duty = 100;
+    duty = (duty > 100) ? 100 : (duty < 0) ? 0 : duty;
 
     R_GPT_InfoGet(&g_timer2_ctrl, &info);
     duty_count=(info.period_counts * duty) / 100;
     R_GPT_DutyCycleSet(&g_timer2_ctrl,duty_count, GPT_IO_PIN_GTIOCA);
 }
 
-uint32_t pwm_period;
-uint32_t pwm_freq;
-uint32_t pwm_duty;
-uint32_t pwm_high_level;
 
 
 //gpt2输入捕获
