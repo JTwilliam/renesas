@@ -68,4 +68,5 @@ src/STP_23L \
 src/UART \
 src/gpt \
 src \
+src/test \
 

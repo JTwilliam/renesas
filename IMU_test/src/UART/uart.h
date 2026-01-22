@@ -14,6 +14,7 @@ typedef enum
 } uart_port_t;
 
 void uart_init(uart_port_t port);
-void uart_printf(uart_port_t uart_num, const char *str);
+/* printf-like variadic UART output */
+void uart_printf(uart_port_t uart_num, const char *fmt, ...);
 
 #endif

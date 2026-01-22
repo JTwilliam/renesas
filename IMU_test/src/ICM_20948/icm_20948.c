@@ -4,6 +4,7 @@
 #include "icm_20948_reg.h"
 // imu需要iic支持包
 #include "IIC/IIC.h"
+#include "UART/uart.h"
 
 #include <math.h>
 #include <string.h>
@@ -17,62 +18,95 @@ static uint8_t ICM20948_Init(void)
 
     // 选择 bank0
     writebuf = REG_VAL_SELECT_BANK_0;
-    SCI_IIC2_write_reg(ICM20948_DEV << 1, REG_BANK_SEL, &writebuf, 1);
+    IIC_Status_t st = UserII2Dev.write_reg(ICM20948_DEV << 1, REG_BANK_SEL, &writebuf, 1, 100);
+    if (st != IIC_OK)
+    {
+        uart_printf(UART_PORT_4, "write_reg REG_BANK_SEL failed: %d\r\n", st);
+    }
 
     // 访问 WHO AM I
-    SCI_IIC2_read_reg(ICM20948_DEV << 1, WHO_AM_I, &writebuf, 1);
-    if (0xEA != writebuf)
+    st = UserII2Dev.read_reg(ICM20948_DEV << 1, WHO_AM_I, &writebuf, 1, 100);
+    if (st != IIC_OK)
+    {
+        uart_printf(UART_PORT_4, "read_reg WHO_AM_I failed: %d\r\n", st);
         return 1;
+    }
+    if (0xEA != writebuf)
+    {
+        uart_printf(UART_PORT_4, "ICM20948 WHO_AM_I = 0x%x\r\n", writebuf);
+        return 1;
+    }
 
     // PWR_MGMT_1 复位
     writebuf = (1 << 7);
-    SCI_IIC2_write_reg(ICM20948_DEV << 1, PWR_MGMT_1, &writebuf, 1);
+    UserII2Dev.write_reg(ICM20948_DEV << 1, PWR_MGMT_1, &writebuf, 1, 100);
     R_BSP_SoftwareDelay(100U, BSP_DELAY_UNITS_MILLISECONDS);
 
     // user_ctrl 清零
     writebuf = 0x00;
-    SCI_IIC2_write_reg(ICM20948_DEV << 1, USER_CTRL, &writebuf, 1);
+    UserII2Dev.write_reg(ICM20948_DEV << 1, USER_CTRL, &writebuf, 1, 100);
 
     // 关闭低功耗，使能温度传感器，设置时钟
     writebuf = 0x01;
-    SCI_IIC2_write_reg(ICM20948_DEV << 1, PWR_MGMT_1, &writebuf, 1);
+    UserII2Dev.write_reg(ICM20948_DEV << 1, PWR_MGMT_1, &writebuf, 1, 100);
 
     // 选择 bank2
     writebuf = REG_VAL_SELECT_BANK_2;
-    SCI_IIC2_write_reg(ICM20948_DEV << 1, REG_BANK_SEL, &writebuf, 1);
+    UserII2Dev.write_reg(ICM20948_DEV << 1, REG_BANK_SEL, &writebuf, 1, 100);
 
     // 设置 GYRO_SMPLRT_DIV
     writebuf = 0x04;
-    SCI_IIC2_write_reg(ICM20948_DEV << 1, GYRO_SMPLRT_DIV, &writebuf, 1);
+    UserII2Dev.write_reg(ICM20948_DEV << 1, GYRO_SMPLRT_DIV, &writebuf, 1, 100);
 
     // GYRO_CONFIG_1
     writebuf = (3 << 1) | (1 << 0) | (3 << 3);
-    SCI_IIC2_write_reg(ICM20948_DEV << 1, GYRO_CONFIG_1, &writebuf, 1);
+    UserII2Dev.write_reg(ICM20948_DEV << 1, GYRO_CONFIG_1, &writebuf, 1, 100);
 
     // ACCEL_SMPLRT_DIV_2
     writebuf = 0x04;
-    SCI_IIC2_write_reg(ICM20948_DEV << 1, ACCEL_SMPLRT_DIV_2, &writebuf, 1);
+    UserII2Dev.write_reg(ICM20948_DEV << 1, ACCEL_SMPLRT_DIV_2, &writebuf, 1, 100);
 
     // ACCEL_CONFIG
     writebuf = (0 << 1) | (1 << 0) | (5 << 3);
-    SCI_IIC2_write_reg(ICM20948_DEV << 1, ACCEL_CONFIG, &writebuf, 1);
+    UserII2Dev.write_reg(ICM20948_DEV << 1, ACCEL_CONFIG, &writebuf, 1, 100);
 
     // 回到 bank0
     writebuf = REG_VAL_SELECT_BANK_0;
-    SCI_IIC2_write_reg(ICM20948_DEV << 1, REG_BANK_SEL, &writebuf, 1);
+    UserII2Dev.write_reg(ICM20948_DEV << 1, REG_BANK_SEL, &writebuf, 1, 100);
 
-    // 启用 bypass 访问磁力计
-    writebuf = (1 << 1);
-    SCI_IIC2_write_reg(ICM20948_DEV << 1, INT_PIN_CFG, &writebuf, 1);
 
-    // 检查磁力计
-    SCI_IIC2_read_reg(AK09916_DEV << 1, WIA, &writebuf, 1);
-    if (0x09 != writebuf)
+    // 禁用 I2C Master（确保 bypass 模式完全启用）
+    writebuf = 0x00;
+    UserII2Dev.write_reg(ICM20948_DEV << 1, USER_CTRL, &writebuf, 1, 100);
+    R_BSP_SoftwareDelay(10U, BSP_DELAY_UNITS_MILLISECONDS);
+
+    // 配置中断引脚并启用 bypass 模式
+    // INT_PIN_CFG = 0x22: bit5=1(INT LATCH), bit1=1(BYPASS I2C)
+    writebuf = 0x22;
+    UserII2Dev.write_reg(ICM20948_DEV << 1, INT_PIN_CFG, &writebuf, 1, 100);
+    R_BSP_SoftwareDelay(50U, BSP_DELAY_UNITS_MILLISECONDS); // 增加延迟以确保 bypass 启用
+
+    // 直接读取 AK09916 的 WIA 寄存器验证 bypass 工作
+    st = UserII2Dev.read_reg(AK09916_DEV << 1, WIA, &writebuf, 1, 100);
+    if (st != IIC_OK)
+    {
+        uart_printf(UART_PORT_4, "read_reg AK09916 WIA failed: %d\r\n", st);
         return 1;
+    }
+    if (0x09 != writebuf)
+    {
+        uart_printf(UART_PORT_4, "AK09916 WIA = 0x%x\r\n", writebuf);
+        return 1;
+    }
 
-    // 配置磁力计输出 100Hz
-    writebuf = (1 << 3);
-    SCI_IIC2_write_reg(AK09916_DEV << 1, CNTL2, &writebuf, 1);
+    // 软复位 AK09916
+    writebuf = 0x01;
+    UserII2Dev.write_reg(AK09916_DEV << 1, CNTL3, &writebuf, 1, 100);
+    R_BSP_SoftwareDelay(10U, BSP_DELAY_UNITS_MILLISECONDS);
+
+    // 配置磁力计为连续模式 100Hz
+    writebuf = 0x08;
+    UserII2Dev.write_reg(AK09916_DEV << 1, CNTL2, &writebuf, 1, 100);
 
     return 0;
 }
@@ -83,16 +117,16 @@ static uint8_t ICM20948_DeInit(void)
 
     // 选择 bank0
     writebuf = REG_VAL_SELECT_BANK_0;
-    SCI_IIC2_write_reg(ICM20948_DEV << 1, REG_BANK_SEL, &writebuf, 1);
+    UserII2Dev.write_reg(ICM20948_DEV << 1, REG_BANK_SEL, &writebuf, 1, 100);
 
     // 检查 WHO AM I
-    SCI_IIC2_read_reg(ICM20948_DEV << 1, WHO_AM_I, &writebuf, 1);
+    UserII2Dev.read_reg(ICM20948_DEV << 1, WHO_AM_I, &writebuf, 1, 100);
     if (0xEA != writebuf)
         return 1;
 
     // 睡眠
     writebuf = (1 << 6);
-    SCI_IIC2_write_reg(ICM20948_DEV << 1, PWR_MGMT_1, &writebuf, 1);
+    UserII2Dev.write_reg(ICM20948_DEV << 1, PWR_MGMT_1, &writebuf, 1, 100);
 
     return 0;
 }
@@ -145,16 +179,16 @@ static void attitudeUpdate(IMU_DATA_t imudata, ATTITUDE_DATA_t *attitude)
     float ay = imudata.accel.y;
     float az = imudata.accel.z;
 
-    float q0q0 = q0 * q0;
+    //    float q0q0 = q0 * q0;
     float q0q1 = q0 * q1;
     float q0q2 = q0 * q2;
-    float q0q3 = q0 * q3;
+    //    float q0q3 = q0 * q3;
     float q1q1 = q1 * q1;
-    float q1q2 = q1 * q2;
+    //    float q1q2 = q1 * q2;
     float q1q3 = q1 * q3;
     float q2q2 = q2 * q2;
     float q2q3 = q2 * q3;
-    float q3q3 = q3 * q3;
+    //    float q3q3 = q3 * q3;
 
     vx = 2 * (q1q3 - q0q2);
     vy = 2 * (q0q1 + q2q3);
@@ -204,7 +238,7 @@ static void ImuUpdate(IMU_DATA_t *data)
     uint8_t magnbuf[8];
 
     // 读取 accel+gyro 12 字节
-    SCI_IIC2_read_reg(ICM20948_DEV << 1, ACCEL_XOUT_H, tmpbuf, 12);
+    UserII2Dev.read_reg(ICM20948_DEV << 1, ACCEL_XOUT_H, tmpbuf, 12, 100);
 
     data->accel.x = (short)(tmpbuf[0] << 8 | tmpbuf[1]);
     data->accel.y = (short)(tmpbuf[2] << 8 | tmpbuf[3]);
@@ -229,9 +263,9 @@ static void ImuUpdate(IMU_DATA_t *data)
     data->gyro.y -= ZeroPoint.gyro.y;
     data->gyro.z -= ZeroPoint.gyro.z;
 
-    // 读取磁力计连续 8 字节
-    SCI_IIC2_read_reg(AK09916_DEV << 1, HXL, magnbuf, 8);
-    if (0 == ((magnbuf[7] >> 3) & 0x01))
+    // 在 bypass 模式下，直接读取 AK09916 磁力计连续 8 字节数据
+    UserII2Dev.read_reg(AK09916_DEV << 1, HXL, magnbuf, 8, 100);
+    if (0 == ((magnbuf[6] >> 3) & 0x01)) // ST2 寄存器在 magnbuf[6]，bit3 = overflow
     {
         data->magn.x = (short)(magnbuf[1] << 8 | magnbuf[0]);
         data->magn.y = (short)(magnbuf[3] << 8 | magnbuf[2]);

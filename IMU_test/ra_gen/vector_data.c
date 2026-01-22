@@ -13,6 +13,10 @@
             [6] = gpt_counter_overflow_isr, /* GPT2 COUNTER OVERFLOW (Overflow) */
             [7] = gpt_capture_compare_a_isr, /* GPT2 CAPTURE COMPARE A (Capture/Compare match A) */
             [8] = gpt_capture_compare_b_isr, /* GPT2 CAPTURE COMPARE B (Capture/Compare match B) */
+            [9] = sci_uart_rxi_isr, /* SCI5 RXI (Receive data full) */
+            [10] = sci_uart_txi_isr, /* SCI5 TXI (Transmit data empty) */
+            [11] = sci_uart_tei_isr, /* SCI5 TEI (Transmit end) */
+            [12] = sci_uart_eri_isr, /* SCI5 ERI (Receive error) */
         };
         #if BSP_FEATURE_ICU_HAS_IELSR
         const bsp_interrupt_event_t g_interrupt_event_link_select[BSP_ICU_VECTOR_NUM_ENTRIES] =
@@ -26,6 +30,10 @@
             [6] = BSP_PRV_VECT_ENUM(EVENT_GPT2_COUNTER_OVERFLOW,GROUP6), /* GPT2 COUNTER OVERFLOW (Overflow) */
             [7] = BSP_PRV_VECT_ENUM(EVENT_GPT2_CAPTURE_COMPARE_A,GROUP7), /* GPT2 CAPTURE COMPARE A (Capture/Compare match A) */
             [8] = BSP_PRV_VECT_ENUM(EVENT_GPT2_CAPTURE_COMPARE_B,GROUP0), /* GPT2 CAPTURE COMPARE B (Capture/Compare match B) */
+            [9] = BSP_PRV_VECT_ENUM(EVENT_SCI5_RXI,GROUP1), /* SCI5 RXI (Receive data full) */
+            [10] = BSP_PRV_VECT_ENUM(EVENT_SCI5_TXI,GROUP2), /* SCI5 TXI (Transmit data empty) */
+            [11] = BSP_PRV_VECT_ENUM(EVENT_SCI5_TEI,GROUP3), /* SCI5 TEI (Transmit end) */
+            [12] = BSP_PRV_VECT_ENUM(EVENT_SCI5_ERI,GROUP4), /* SCI5 ERI (Receive error) */
         };
         #endif
         #endif
