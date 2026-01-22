@@ -6,7 +6,11 @@
         #endif
 /* Number of interrupts allocated */
 #ifndef VECTOR_DATA_IRQ_COUNT
+<<<<<<< HEAD
 #define VECTOR_DATA_IRQ_COUNT    (10)
+=======
+#define VECTOR_DATA_IRQ_COUNT    (13)
+>>>>>>> 6adcdcd621eda991443e187a84bdeb415aeaf0e8
 #endif
 /* ISR prototypes */
 void sci_uart_rxi_isr(void);
@@ -39,10 +43,23 @@ void adc_scan_end_isr(void);
 #define GPT2_CAPTURE_COMPARE_A_IRQn          ((IRQn_Type) 7) /* GPT2 CAPTURE COMPARE A (Capture/Compare match A) */
 #define VECTOR_NUMBER_GPT2_CAPTURE_COMPARE_B ((IRQn_Type) 8) /* GPT2 CAPTURE COMPARE B (Capture/Compare match B) */
 #define GPT2_CAPTURE_COMPARE_B_IRQn          ((IRQn_Type) 8) /* GPT2 CAPTURE COMPARE B (Capture/Compare match B) */
+<<<<<<< HEAD
 #define VECTOR_NUMBER_ADC0_SCAN_END ((IRQn_Type) 9) /* ADC0 SCAN END (End of A/D scanning operation) */
 #define ADC0_SCAN_END_IRQn          ((IRQn_Type) 9) /* ADC0 SCAN END (End of A/D scanning operation) */
 /* The number of entries required for the ICU vector table. */
 #define BSP_ICU_VECTOR_NUM_ENTRIES (10)
+=======
+#define VECTOR_NUMBER_SCI5_RXI ((IRQn_Type) 9) /* SCI5 RXI (Receive data full) */
+#define SCI5_RXI_IRQn          ((IRQn_Type) 9) /* SCI5 RXI (Receive data full) */
+#define VECTOR_NUMBER_SCI5_TXI ((IRQn_Type) 10) /* SCI5 TXI (Transmit data empty) */
+#define SCI5_TXI_IRQn          ((IRQn_Type) 10) /* SCI5 TXI (Transmit data empty) */
+#define VECTOR_NUMBER_SCI5_TEI ((IRQn_Type) 11) /* SCI5 TEI (Transmit end) */
+#define SCI5_TEI_IRQn          ((IRQn_Type) 11) /* SCI5 TEI (Transmit end) */
+#define VECTOR_NUMBER_SCI5_ERI ((IRQn_Type) 12) /* SCI5 ERI (Receive error) */
+#define SCI5_ERI_IRQn          ((IRQn_Type) 12) /* SCI5 ERI (Receive error) */
+/* The number of entries required for the ICU vector table. */
+#define BSP_ICU_VECTOR_NUM_ENTRIES (13)
+>>>>>>> 6adcdcd621eda991443e187a84bdeb415aeaf0e8
 
 #ifdef __cplusplus
         }

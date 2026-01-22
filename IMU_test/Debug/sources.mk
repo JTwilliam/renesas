@@ -73,4 +73,5 @@ src/Test_LQZ \
 src/UART \
 src/gpt \
 src \
+src/test \
 

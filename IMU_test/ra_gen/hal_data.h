@@ -4,17 +4,21 @@
 #include <stdint.h>
 #include "bsp_api.h"
 #include "common_data.h"
+<<<<<<< HEAD
 #include "r_dmac.h"
 #include "r_transfer_api.h"
 #include "r_adc.h"
 #include "r_adc_api.h"
+=======
+#include "r_sci_uart.h"
+#include "r_uart_api.h"
+>>>>>>> 6adcdcd621eda991443e187a84bdeb415aeaf0e8
 #include "r_gpt.h"
 #include "r_timer_api.h"
 #include "r_sci_i2c.h"
 #include "r_i2c_master_api.h"
-#include "r_sci_uart.h"
-#include "r_uart_api.h"
 FSP_HEADER
+<<<<<<< HEAD
 /* Transfer on DMAC Instance. */
 extern const transfer_instance_t g_transfer0;
 
@@ -39,6 +43,18 @@ void adc_callback(adc_callback_args_t *p_args);
 
 #ifndef NULL
 #define ADC_DMAC_CHANNELS_PER_BLOCK_NULL  1
+=======
+/** UART on SCI Instance. */
+extern const uart_instance_t g_uart5;
+
+/** Access the UART instance using these structures when calling API functions directly (::p_api is not used). */
+extern sci_uart_instance_ctrl_t g_uart5_ctrl;
+extern const uart_cfg_t g_uart5_cfg;
+extern const sci_uart_extended_cfg_t g_uart5_cfg_extend;
+
+#ifndef g_uart5_callback
+void g_uart5_callback(uart_callback_args_t *p_args);
+>>>>>>> 6adcdcd621eda991443e187a84bdeb415aeaf0e8
 #endif
 /** Timer on GPT Instance. */
 extern const timer_instance_t g_timer2;

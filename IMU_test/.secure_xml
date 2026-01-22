@@ -82,12 +82,16 @@
       <configSetting altId="p114.gpio_mode.gpio_mode_peripheral" configurationId="p114.gpio_mode"/>
       <configSetting altId="p300.gpio_mode.gpio_mode_peripheral" configurationId="p300.gpio_mode"/>
       <configSetting altId="p405.gpio_mode.gpio_mode_peripheral" configurationId="p405.gpio_mode"/>
+      <configSetting altId="p501.gpio_mode.gpio_mode_peripheral" configurationId="p501.gpio_mode"/>
+      <configSetting altId="p502.gpio_mode.gpio_mode_peripheral" configurationId="p502.gpio_mode"/>
       <configSetting altId="p511.gpio_mode.gpio_mode_peripheral" configurationId="p511.gpio_mode"/>
       <configSetting altId="p512.gpio_mode.gpio_mode_peripheral" configurationId="p512.gpio_mode"/>
       <configSetting altId="sci2.scl.p113" configurationId="sci2.scl" isUsedByDriver="true" peripheral="SCI2"/>
       <configSetting altId="sci2.sda.p112" configurationId="sci2.sda" isUsedByDriver="true" peripheral="SCI2"/>
       <configSetting altId="sci4.rxd.p511" configurationId="sci4.rxd" isUsedByDriver="true" peripheral="SCI4"/>
       <configSetting altId="sci4.txd.p512" configurationId="sci4.txd" isUsedByDriver="true" peripheral="SCI4"/>
+      <configSetting altId="sci5.rxd.p502" configurationId="sci5.rxd" isUsedByDriver="true" peripheral="SCI5"/>
+      <configSetting altId="sci5.txd.p501" configurationId="sci5.txd" isUsedByDriver="true" peripheral="SCI5"/>
     </pincfg>
   </raPinConfiguration>
 </raConfiguration>
